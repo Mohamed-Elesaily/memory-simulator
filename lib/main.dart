@@ -33,8 +33,7 @@ class _MyAppState extends State<MyApp> {
                 child: Icon(Icons.play_arrow), 
                 onPressed: () {
                     setState(() {
-                    
-                     parti();
+                      
 
                     });
 
@@ -150,33 +149,15 @@ class _MyAppState extends State<MyApp> {
                 Container(
                   width:400,
                   color:Colors.blue,
-                  child:
-                          Stack(
-                            children:[
-                              Text("0"),
-                              Positioned
-                              (child: Text("${Memory.maxsize}"),
-                              bottom: 10.0*_scalling,
-                              
-                              ),
-                              // Positioned(
-                              //     height:300/_scalling,
-                              //     width:400,
-                              //     child: Container(
-                              //       height:50,
-                              //       color:Colors.green
-                              //     ),
-                              //     top: 200/_scalling,
-                              //     ),
-                            // item("procees", "segment", 300, 400),
-                             
-                             for(Positioned i in hole) i,
-                             
-                            
-                                
-                            ]
-                          )
-                      
+                  child:  ListView.builder(
+                    itemCount: Memory.partition.length,
+                    itemBuilder: (context,index){
+                      return item("","",Memory.partition[index].start,Memory.partition[index].size);
+                    }
+                    
+                    
+                    )
+                          
 
                   
                 )
@@ -186,12 +167,10 @@ class _MyAppState extends State<MyApp> {
             )
             );
   }
-  Positioned item(String process,String segment,int base,int limit){
-    return  Positioned(
-              height:limit/_scalling,
-              width:400,
-              child: Container(
-                
+  Container item(String process,String segment,int base,int limit){
+    return  Container(
+                height: 100,
+              
                 color:Colors.green,
                 child: Stack(
                   children: [
@@ -215,17 +194,23 @@ class _MyAppState extends State<MyApp> {
                     
                   ],
                 ),
-              ),
-              top:base/_scalling,
               );
   }
 
+List<Container> list(int index){
+  int start=0;
+    List<Container> temp = new List<Container>();
 
-void parti(){
- 
-  for(int i=0;i<Memory.partition.length;i++){
-      hole.add(item("","",Memory.partition[i].start,Memory.partition[i].size));
-  }
+   if(Memory.partition[0].start == 0){
+      temp.add(item("","",Memory.partition[index].start,Memory.partition[index].size));
+      for(int i=1;i<Memory.partition.length;i++){
+      
+     }
+    }else{
+      temp.add(item("unused","",start,Memory.partition[index].size));
+      temp.add(item("","",Memory.partition[index].start,Memory.partition[index].size));
+    }
+
 }
 
 }
