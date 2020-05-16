@@ -8,4 +8,5 @@ class Process{
   void addSegment(String name,int size){
     segment.add(new Segment(name, size));
   }
+
 }
