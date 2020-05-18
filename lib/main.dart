@@ -6,7 +6,7 @@ import 'package:memory_simulator/algorithm/segmentTable/segmentTable.dart';
 import 'package:memory_simulator/widget/drawer.dart';
 import 'package:memory_simulator/widget/inputfield.dart';
 import 'package:memory_simulator/widget/segmentTableWidget.dart';
-
+import 'package:memory_simulator/algorithm/segmentTable/element.dart' as element;
 void main() {
   runApp(MyApp());
 }
@@ -21,9 +21,16 @@ class _MyAppState extends State<MyApp> {
   var _segmentTable = SegmentTable();
   var _partition = Memory();
   var _scalling = 1;
-  var _segmentTab =new List<ElementTable>.from(SegmentTable.segmentTable);
-  static List<Positioned> hole = new List<Positioned>();
+  var _tempscall =1;
+
+  var _segmentTab =new List<ElementTable>();
+  int processindex=0;
+  int segmentindex=0;
+  
+  List<Positioned> hole = new List<Positioned>();
+  
   @override
+  
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData.dark(),
@@ -34,7 +41,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                     setState(() {
                     
-                     parti();
+                    //  _partition.makeMemory();
 
                     });
 
@@ -71,7 +78,8 @@ class _MyAppState extends State<MyApp> {
             body: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                Column(
+                Wrap(
+                  direction: Axis.vertical,
                   children: [
                     SegmentTableWidget(),
                     Card(
@@ -108,13 +116,39 @@ class _MyAppState extends State<MyApp> {
                               IconButton(
                                   icon: Icon(Icons.arrow_forward,size: 50,),
                                    onPressed: (){
-
+                                     ElementTable temp;
+                                     element.Element t;
+                                     if(processindex < SegmentTable.segmentTable.length){
+                                       if(segmentindex<SegmentTable.segmentTable[processindex].eachProcess.length){
+                                        //  temp.proceesName = SegmentTable.segmentTable[processindex].proceesName;
+                                        //  t.base=SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base;
+                                        //  t.limit=SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit;
+                                        //  t.name =SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name;
+                                        //   temp.eachProcess.add(t);
+                                          // temp = List<ElementTable>.from(temp);
+                                          setState(() {
+                                             hole.add(item(SegmentTable.segmentTable[processindex].proceesName,
+                                        SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name,
+                                          SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base,
+                                          SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),
+                                          );
+                                          });
+                                     
+                                         segmentindex++;
+                                      
+                                       }else{
+                                         segmentindex = 0;
+                                          processindex++;
+                                       }
+                                     }else{
+                                      
+                                     }
                                    }),
                               
                               ],),
                               SizedBox(height:60),
-                              Tooltip(
-                                message:'Scalling' ,
+                               Tooltip(
+                                message:'height scalling' ,
                                 child:Row(
                                mainAxisAlignment: MainAxisAlignment.spaceAround, 
                               children: [
@@ -122,9 +156,12 @@ class _MyAppState extends State<MyApp> {
                                   icon: Icon(Icons.add,size:30,),
                                   onPressed: (){
                                       setState(() {
-                                        if(_scalling!=1){
-                                          _scalling -= 1;
-                                        }
+                                        
+                                          _scalling += 1;
+                                         
+                                         
+                                        
+                                      
                                       });
                                    }
                                    ),
@@ -132,8 +169,39 @@ class _MyAppState extends State<MyApp> {
                                   icon: Icon(Icons.minimize,size: 30,),
                                   onPressed: (){
                                       setState(() {
-                                        _scalling +=1;
-                                
+                                        if(_scalling!=1){
+                                        _scalling -=1;
+                                        }
+                                      });
+                                   })
+                             
+                              ],), 
+                                ),
+                                 Tooltip(
+                                message:'Position scalling' ,  
+                                child:Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceAround, 
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.add,size:30,),
+                                  onPressed: (){
+                                      setState(() {
+                                        
+                                          _tempscall  += 1;
+                                         
+                                         
+                                        
+                                      
+                                      });
+                                   }
+                                   ),
+                                   IconButton(
+                                  icon: Icon(Icons.minimize,size: 30,),
+                                  onPressed: (){
+                                      setState(() {
+                                        if(_tempscall!=1){
+                                        _tempscall  -=1;
+                                        }
                                       });
                                    })
                              
@@ -149,32 +217,61 @@ class _MyAppState extends State<MyApp> {
                 SizedBox(width:300),
                 Container(
                   width:400,
-                  color:Colors.blue,
+                
                   child:
-                          Stack(
-                            children:[
-                              Text("0"),
-                              Positioned
-                              (child: Text("${Memory.maxsize}"),
-                              bottom: 10.0*_scalling,
-                              
+                         ListView(
+                            children: [
+                              Container(
+                                height: Memory.maxsize/_scalling,
+                                child: Stack(
+                                  children:[
+                                    
+                                      Positioned
+                                    (child: Text("0"),
+                                    top: (10.0*_scalling),
+                                    
+                                    ),
+                                    Positioned
+                                    (child: Text("${Memory.maxsize}"),
+                                    bottom: (10.0*_scalling),
+                                    
+                                    ),
+                                    // Positioned(
+                                    //     height:300/_scalling,
+                                    //     width:400,
+                                    //     child: Container(
+                                    //       height:50,
+                                    //       color:Colors.green
+                                    //     ),
+                                    //     top: 200/_scalling,
+                                    //     ),
+                                  // item("procees", "segment", 300, 400),
+                                        
+                                  for(var i in Memory.partition) item("","",i.start,i.size,Colors.green),
+                             
+                                  for(var i in hole) i,
+                                  
+                                  // Container(
+                                  //   height: 600,
+                                  //   width: 100,
+                                  //   child: ListView.builder(
+                                  //     itemCount: Memory.memoryMap.length,
+                                  //     itemBuilder: (context,index){
+                                  //       return Column(
+                                  //         children: [
+                                  //           SizedBox(height:20),
+                                  //           item("","",Memory.partition[index].start,Memory.partition[index].size),
+                                  //           SizedBox(height:80),
+                                  //         ],
+                                  //       );
+                                  //     }
+                                  //     )
+                                  // )
+                                      
+                                  ]
+                                ),
                               ),
-                              // Positioned(
-                              //     height:300/_scalling,
-                              //     width:400,
-                              //     child: Container(
-                              //       height:50,
-                              //       color:Colors.green
-                              //     ),
-                              //     top: 200/_scalling,
-                              //     ),
-                            // item("procees", "segment", 300, 400),
-                             
-                             for(Positioned i in hole) i,
-                             
-                            
-                                
-                            ]
+                            ],
                           )
                       
 
@@ -186,13 +283,14 @@ class _MyAppState extends State<MyApp> {
             )
             );
   }
-  Positioned item(String process,String segment,int base,int limit){
+  Positioned item(String process,String segment,int base,int limit,Color color){
     return  Positioned(
-              height:limit/_scalling,
+              height:((limit/1.0)*_scalling),
+                // height: 100,
               width:400,
               child: Container(
                 
-                color:Colors.green,
+                color:color,
                 child: Stack(
                   children: [
                    Align(
@@ -216,17 +314,9 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
               ),
-              top:base/_scalling,
+              top:(base/1)*_tempscall,
               );
   }
-
-
-void parti(){
- 
-  for(int i=0;i<Memory.partition.length;i++){
-      hole.add(item("","",Memory.partition[i].start,Memory.partition[i].size));
-  }
-}
 
 }
 
