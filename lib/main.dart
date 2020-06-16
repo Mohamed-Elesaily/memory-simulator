@@ -26,8 +26,9 @@ class _MyAppState extends State<MyApp> {
   var _segmentTab =new List<ElementTable>();
   int processindex=0;
   int segmentindex=0;
-  
+  ListOfSegment show = new ListOfSegment();
   List<Positioned> hole = new List<Positioned>();
+  List<Positioned> part = new List<Positioned>();
   
   @override
   
@@ -127,11 +128,16 @@ class _MyAppState extends State<MyApp> {
                                         //   temp.eachProcess.add(t);
                                           // temp = List<ElementTable>.from(temp);
                                           setState(() {
-                                             hole.add(item(SegmentTable.segmentTable[processindex].proceesName,
+                                        //      hole.add(item(SegmentTable.segmentTable[processindex].proceesName,
+                                        // SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name,
+                                        //   SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base,
+                                        //   SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),
+
+                                        //   );
+                                                  show.segments.add(new ShowSegment(SegmentTable.segmentTable[processindex].proceesName,
                                         SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name,
                                           SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base,
-                                          SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),
-                                          );
+                                          SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),);
                                           });
                                      
                                          segmentindex++;
@@ -222,18 +228,18 @@ class _MyAppState extends State<MyApp> {
                          ListView(
                             children: [
                               Container(
-                                height: Memory.maxsize/_scalling,
+                                height: Memory.maxsize/1 + _scalling,
                                 child: Stack(
                                   children:[
                                     
                                       Positioned
                                     (child: Text("0"),
-                                    top: (10.0*_scalling),
+                                    top: (1.0+_scalling),
                                     
                                     ),
                                     Positioned
                                     (child: Text("${Memory.maxsize}"),
-                                    bottom: (10.0*_scalling),
+                                    bottom:3000/1,
                                     
                                     ),
                                     // Positioned(
@@ -246,10 +252,10 @@ class _MyAppState extends State<MyApp> {
                                     //     top: 200/_scalling,
                                     //     ),
                                   // item("procees", "segment", 300, 400),
-                                        
+                                   
                                   for(var i in Memory.partition) item("","",i.start,i.size,Colors.green),
-                             
-                                  for(var i in hole) i,
+                                  for(var j in show.segments)item(j.processName,j.segmentName,j.base,j.limit,Colors.blue),
+
                                   
                                   // Container(
                                   //   height: 600,
@@ -285,7 +291,7 @@ class _MyAppState extends State<MyApp> {
   }
   Positioned item(String process,String segment,int base,int limit,Color color){
     return  Positioned(
-              height:((limit/1.0)*_scalling),
+              height:((limit/1.0) + _scalling),
                 // height: 100,
               width:400,
               child: Container(
@@ -309,14 +315,28 @@ class _MyAppState extends State<MyApp> {
                     Align(
                       alignment:Alignment.bottomLeft,
                       child:Text('${(base+limit)}')
-                    )
+                    ),
+              
                     
                   ],
+                
                 ),
               ),
-              top:(base/1)*_tempscall,
+              top:(base/1) + _tempscall+20,
               );
   }
 
 }
 
+class ShowSegment{
+  String processName;
+  String segmentName;
+  int base;
+  int limit;
+  Color color;
+  ShowSegment(this.processName,this.segmentName,this.base,this.limit,this.color);
+}    
+  class ListOfSegment{
+    List<ShowSegment> segments = new List<ShowSegment>();
+
+  }
