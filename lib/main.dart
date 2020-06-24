@@ -4,7 +4,6 @@ import 'package:memory_simulator/algorithm/process/processbuilder.dart';
 import 'package:memory_simulator/algorithm/segmentTable/elementTable.dart';
 import 'package:memory_simulator/algorithm/segmentTable/segmentTable.dart';
 import 'package:memory_simulator/widget/drawer.dart';
-import 'package:memory_simulator/widget/inputfield.dart';
 import 'package:memory_simulator/widget/segmentTableWidget.dart';
 import 'package:memory_simulator/algorithm/segmentTable/element.dart' as element;
 void main() {
@@ -99,6 +98,7 @@ class _MyAppState extends State<MyApp> {
                                    child: Text("Best fit"),
                                    onPressed: (){
                                      setState(() {
+                                      // show.segments.clear();
                                      _segmentTable.bestFit();
                                      });
                                        
@@ -110,6 +110,7 @@ class _MyAppState extends State<MyApp> {
                                    onPressed: (){
                                    
                                       setState(() {
+                                          // show.segments.clear();
                                            _segmentTable.firstFit();
                                       });
 
@@ -134,10 +135,11 @@ class _MyAppState extends State<MyApp> {
                                         //   SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),
 
                                         //   );
-                                                  show.segments.add(new ShowSegment(SegmentTable.segmentTable[processindex].proceesName,
-                                        SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name,
+                                          show.segments.add(new ShowSegment(SegmentTable.segmentTable[processindex].proceesName,
+                                          SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name,
                                           SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base,
                                           SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),);
+                                          // show.segments = new List<ShowSegment>.from(show.segments);
                                           });
                                      
                                          segmentindex++;
@@ -239,40 +241,15 @@ class _MyAppState extends State<MyApp> {
                                     ),
                                     Positioned
                                     (child: Text("${Memory.maxsize}"),
-                                    bottom:3000/1,
+                                    bottom:0/1+_scalling,
                                     
                                     ),
-                                    // Positioned(
-                                    //     height:300/_scalling,
-                                    //     width:400,
-                                    //     child: Container(
-                                    //       height:50,
-                                    //       color:Colors.green
-                                    //     ),
-                                    //     top: 200/_scalling,
-                                    //     ),
-                                  // item("procees", "segment", 300, 400),
-                                   
+                           
                                   for(var i in Memory.partition) item("","",i.start,i.size,Colors.green),
                                   for(var j in show.segments)item(j.processName,j.segmentName,j.base,j.limit,Colors.blue),
 
                                   
-                                  // Container(
-                                  //   height: 600,
-                                  //   width: 100,
-                                  //   child: ListView.builder(
-                                  //     itemCount: Memory.memoryMap.length,
-                                  //     itemBuilder: (context,index){
-                                  //       return Column(
-                                  //         children: [
-                                  //           SizedBox(height:20),
-                                  //           item("","",Memory.partition[index].start,Memory.partition[index].size),
-                                  //           SizedBox(height:80),
-                                  //         ],
-                                  //       );
-                                  //     }
-                                  //     )
-                                  // )
+                                
                                       
                                   ]
                                 ),
