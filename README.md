@@ -1,2 +1,2 @@
 # memory-simulator
-![](gif/memory_simulator.gif)
+![](gif/memory-simulator.gif)
