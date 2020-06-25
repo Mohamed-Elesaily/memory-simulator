@@ -24,7 +24,6 @@ class _MyAppState extends State<MyApp> {
   var _scalling = 1;
   var _tempscall = 1;
 
-  var _segmentTab = new List<ElementTable>();
   int processindex = 0;
   int segmentindex = 0;
   ListOfSegment show = new ListOfSegment();
@@ -109,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                                   child: Text("Best fit"),
                                   onPressed: () {
                                     setState(() {
-                                      // show.segments.clear();
+                                     show.segments.clear();
                                       _segmentTable.bestFit();
                                     });
                                   },
@@ -118,72 +117,12 @@ class _MyAppState extends State<MyApp> {
                                   child: Text("first fit"),
                                   onPressed: () {
                                     setState(() {
-                                      // show.segments.clear();
+                                        show.segments.clear();
                                       _segmentTable.firstFit();
                                     });
                                   },
                                 ),
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.arrow_forward,
-                                      size: 50,
-                                    ),
-                                    onPressed: () {
-                                      ElementTable temp;
-                                      element.Element t;
-                                      if (processindex <
-                                          SegmentTable.segmentTable.length) {
-                                        if (segmentindex <
-                                            SegmentTable
-                                                .segmentTable[processindex]
-                                                .eachProcess
-                                                .length) {
-                                          //  temp.proceesName = SegmentTable.segmentTable[processindex].proceesName;
-                                          //  t.base=SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base;
-                                          //  t.limit=SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit;
-                                          //  t.name =SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name;
-                                          //   temp.eachProcess.add(t);
-                                          // temp = List<ElementTable>.from(temp);
-                                          setState(() {
-                                            //      hole.add(item(SegmentTable.segmentTable[processindex].proceesName,
-                                            // SegmentTable.segmentTable[processindex].eachProcess[segmentindex].name,
-                                            //   SegmentTable.segmentTable[processindex].eachProcess[segmentindex].base,
-                                            //   SegmentTable.segmentTable[processindex].eachProcess[segmentindex].limit,Colors.blue),
-
-                                            //   );
-                                            show.segments.add(
-                                              new ShowSegment(
-                                                  SegmentTable
-                                                      .segmentTable[
-                                                          processindex]
-                                                      .proceesName,
-                                                  SegmentTable
-                                                      .segmentTable[
-                                                          processindex]
-                                                      .eachProcess[segmentindex]
-                                                      .name,
-                                                  SegmentTable
-                                                      .segmentTable[
-                                                          processindex]
-                                                      .eachProcess[segmentindex]
-                                                      .base,
-                                                  SegmentTable
-                                                      .segmentTable[
-                                                          processindex]
-                                                      .eachProcess[segmentindex]
-                                                      .limit,
-                                                  Colors.blue),
-                                            );
-                                            // show.segments = new List<ShowSegment>.from(show.segments);
-                                          });
-
-                                          segmentindex++;
-                                        } else {
-                                          segmentindex = 0;
-                                          processindex++;
-                                        }
-                                      } else {}
-                                    }),
+                                
                               ],
                             ),
                             SizedBox(height: 60),
@@ -290,25 +229,45 @@ class _MyAppState extends State<MyApp> {
       height: ((limit / 1.0) + _scalling),
       // height: 100,
       width: 400,
-      child: Container(
-        color: color,
-        child: Stack(
-          children: [
-            Align(alignment: Alignment.topLeft, child: Text('$base')),
-            Center(
-              child: Wrap(
-                  direction: Axis.vertical,
-                  children: [Text("$process "), Text(segment)]),
+      child: Tooltip(
+              message: 'deallocate $process',
+              child: InkWell(
+                child: Container(
+            color: color,
+            child: Stack(
+              children: [
+                Align(alignment: Alignment.topLeft, child: Text('$base')),
+                Center(
+                  child: Wrap(
+                      direction: Axis.vertical,
+                      children: [Text("$process "), Text(segment)]),
+                ),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text('${(base + limit)}')),
+              ],
             ),
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: Text('${(base + limit)}')),
-          ],
+          ),
+          
+          onTap: (){
+              print('object');
+              setState(() {
+                show.delete(process);
+              });
+          },
+        highlightColor: Colors.red,
         ),
       ),
       top: (base / 1) + _tempscall + 20,
     );
   }
+  //   void _showAlertDialog(String title, String message) {
+  //   AlertDialog alertDialog = AlertDialog(
+  //     title: Text(title),
+  //     content: Text(message),
+  //   );
+  //   showDialog(context: context, builder: (_) => alertDialog);
+  // }
 }
 
 class ShowSegment {
@@ -323,4 +282,9 @@ class ShowSegment {
 
 class ListOfSegment {
   List<ShowSegment> segments = new List<ShowSegment>();
+  void delete(String  name){
+    for(int i=0;i<segments.length;i++){
+      if(segments[i].processName == name) segments.removeAt(i);
+    }
+  }
 }
