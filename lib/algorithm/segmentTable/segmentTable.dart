@@ -94,6 +94,12 @@ void firstFit(){
           segmentTable[i].eachProcess[j].base = temp[h].start;
           temp.removeAt(h);
           break;
+        }else{
+          segmentTable[i].proceesName = "(not allocatable)";
+          segmentTable[i].eachProcess[j].base =0;
+          
+           segmentTable[i].eachProcess[j].name ='None';
+          
         }
       }
 
@@ -116,6 +122,12 @@ void bestFit(){
           segmentTable[i].eachProcess[j].base = temp[h].start;
           temp.removeAt(h);
           break;
+        }else{
+          segmentTable[i].proceesName += "(not allocatable)";
+          segmentTable[i].eachProcess[j].base =0;
+          segmentTable[i].eachProcess[j].name ='None';
+          
+          
         }
       }
 
