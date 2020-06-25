@@ -84,9 +84,9 @@ void _partitionSort(){
 void firstFit(){
   clearAll();
   _prepare();
-  
+  _writeTemp();
   for(int i=0;i<segmentTable.length;i++){
-    _writeTemp();
+   
     for(int j=0;j<segmentTable[i].eachProcess.length;j++){
       for(int h=0;h<temp.length;h++){
      
@@ -105,10 +105,10 @@ void firstFit(){
 void bestFit(){
    clearAll();
   _prepare();
-
+  _writeTemp();
+  _partitionSort();
   for(int i=0;i<segmentTable.length;i++){
-    _writeTemp();
-    _partitionSort();
+  
     for(int j=0;j<segmentTable[i].eachProcess.length;j++){
       for(int h=0;h<temp.length;h++){
      

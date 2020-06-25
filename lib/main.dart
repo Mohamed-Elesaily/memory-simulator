@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:memory_simulator/algorithm/memory/memory.dart';
 import 'package:memory_simulator/algorithm/process/processbuilder.dart';
-import 'package:memory_simulator/algorithm/segmentTable/elementTable.dart';
 import 'package:memory_simulator/algorithm/segmentTable/segmentTable.dart';
 import 'package:memory_simulator/widget/drawer.dart';
 import 'package:memory_simulator/widget/segmentTableWidget.dart';
-import 'package:memory_simulator/algorithm/segmentTable/element.dart'
-    as element;
+
 
 void main() {
   runApp(MyApp());
@@ -253,21 +251,15 @@ class _MyAppState extends State<MyApp> {
               print('object');
               setState(() {
                 show.delete(process);
+               
               });
           },
-        highlightColor: Colors.red,
+    
         ),
       ),
       top: (base / 1) + _tempscall + 20,
     );
   }
-  //   void _showAlertDialog(String title, String message) {
-  //   AlertDialog alertDialog = AlertDialog(
-  //     title: Text(title),
-  //     content: Text(message),
-  //   );
-  //   showDialog(context: context, builder: (_) => alertDialog);
-  // }
 }
 
 class ShowSegment {
@@ -283,8 +275,6 @@ class ShowSegment {
 class ListOfSegment {
   List<ShowSegment> segments = new List<ShowSegment>();
   void delete(String  name){
-    for(int i=0;i<segments.length;i++){
-      if(segments[i].processName == name) segments.removeAt(i);
-    }
+    segments.removeWhere((element) => element.processName == name);
   }
 }

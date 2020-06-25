@@ -13,7 +13,6 @@ class _ConfigureationState extends State<Configureation> {
   TextEditingController _sizeSegment = new TextEditingController();
   TextEditingController _partition = new TextEditingController();
   TextEditingController _sizePartition = new TextEditingController();
-   TextEditingController _memorySize = new TextEditingController();
       TextEditingController _maxSize = new TextEditingController();
   var _process = ProcessBuilder();
   var _memory = Memory();
@@ -123,7 +122,8 @@ class _ConfigureationState extends State<Configureation> {
                         ],),
                       Input(_maxSize),
                      IconButton(
-                     icon: Icon(Icons.directions_run), 
+                       tooltip: 'add memory limit',
+                     icon: Icon(Icons.add_box), 
                      onPressed: (){
                        Memory.maxsize = int.parse(_maxSize.text);
                      }
@@ -156,7 +156,7 @@ class _ConfigureationState extends State<Configureation> {
                                 
                                 children: [
                                   SizedBox(width: 20,),
-                                  Text('P${index}')],
+                                  Text('P$index')],
                                 
                                 ),
                                 Divider(
